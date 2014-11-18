@@ -9,9 +9,9 @@ var LA_POSTS_TIMEOUT = 1000*45*2;
 
 
 
-var user_form = "zhegewentia@163.com";
+var user_form = "doushidasheng@163.com";
 var password = "837139670";
-var user_to = "teesst123@163.com";
+var user_to = "teesst1234@163.com";
 var set_count = 0;
 
 var transport = nodemailer.createTransport({  
@@ -63,7 +63,7 @@ function la(t_url,callback){
 
         res.on('end', function () {
             if(str){
-            	console.log("already download content from url : " + t_url);
+                console.log("already download content from url : " + t_url);
                 callback(str);
             }
         });
@@ -95,6 +95,7 @@ function laURL(){
 function laPosts(){
     var len = posts_url_list.length;
     console.log("posts_url_list length : " + len);
+    showMem();
     if(len>0){
         var this_url = posts_url_list.shift();
         var re = la(this_url,function(re){
@@ -116,13 +117,19 @@ setInterval(laURL,LA_URL_TIMEOUT);
 
 setInterval(laPosts,LA_POSTS_TIMEOUT);
 
-setInterval(function(){
-	var len = mail_opt_list.length;
-	console.log("mail_opt_list length : " + len);
-	if(len > 0){
-		sendMail(mail_opt_list.shift());
-	}
-},SENDMAIL_TIMEOUT);
+function checkAndSend(){
+    var len = mail_opt_list.length;
+    console.log("mail_opt_list length : " + len);
+    if(len > 0){
+        sendMail(mail_opt_list.shift());
+    }
+
+    setTimeout(function() {
+        checkAndSend();
+    }, SENDMAIL_TIMEOUT+Math.random()*1000*30);
+}
+
+checkAndSend();
 
 console.log("send mail auto start ...");
 
@@ -130,3 +137,13 @@ console.log("send mail auto start ...");
 laURL();
 laPosts();
 
+function showMem() {
+  var mem = process.memoryUsage();
+  var format = function (bytes) {
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  };
+  console.log('-----------------------------------------------------------');
+  console.log('Process: heapTotal ' + format(mem.heapTotal) +
+    ' heapUsed ' + format(mem.heapUsed) + ' rss ' + format(mem.rss));
+  console.log('-----------------------------------------------------------');
+};
