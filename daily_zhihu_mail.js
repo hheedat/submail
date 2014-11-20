@@ -1,12 +1,12 @@
-var nodemailer = require("nodemailer"); 
-var cheerio = require('cheerio'); 
+var nodemailer = require("nodemailer");
+var cheerio = require('cheerio');
 var http = require('http');
 var util = require('util');
 var iconv = require('iconv-lite');
 
-var SENDMAIL_TIMEOUT = 1000*60*5;
-var LA_URL_TIMEOUT = 1000*60*20;
-var LA_POSTS_TIMEOUT = 1000*60*3;
+var SENDMAIL_TIMEOUT = 1000 * 60 * 5;
+var LA_URL_TIMEOUT = 1000 * 60 * 20;
+var LA_POSTS_TIMEOUT = 1000 * 60 * 3;
 
 // var SENDMAIL_TIMEOUT = 1000;
 // var LA_URL_TIMEOUT = 1000;
@@ -18,9 +18,9 @@ var password = "837139670";
 var user_to = "teesst1234@163.com";
 var set_count = 0;
 
-var transport = nodemailer.createTransport({  
-    service:"163",
-    auth: {  
+var transport = nodemailer.createTransport({
+    service: "163",
+    auth: { 
         user: user_form,  
         pass: password  
     }  
