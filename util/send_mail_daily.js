@@ -154,12 +154,12 @@ function showMem() {
   };
   
   console.log('Process: heapTotal ' + format(mem.heapTotal) + ' heapUsed ' + format(mem.heapUsed) + ' rss ' + format(mem.rss));
-  console.log('user now is : ' + mailOption.user_to);
+  console.log('user now is : ' + mailOption.to);
 };
 
 var mail_opt = {
     addmail: function (addr) {
-        mailOption.user_to = addr;
+        mailOption.to = addr;
     }
 }
 
