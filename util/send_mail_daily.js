@@ -13,13 +13,13 @@ var LA_POSTS_TIMEOUT = 1000 * 60 * 3;
 // var LA_POSTS_TIMEOUT = 1000;
 
 
-var user_form = "songminglinghang@163.com";
+var user_form = "teesst456@gmail.com";
 var password = "837139670";
 var user_to = "teesst1234@163.com";
 var set_count = 0;
 
 var transport = nodemailer.createTransport({
-    service: "163",
+    service: "Gmail",
     auth: { 
         user: user_form,  
         pass: password  
@@ -152,7 +152,15 @@ function showMem() {
   var format = function (bytes) {
     return (bytes / 1024 / 1024).toFixed(2) + ' MB';
   };
-  console.log('-----------------------------------------------------------');
+  
   console.log('Process: heapTotal ' + format(mem.heapTotal) + ' heapUsed ' + format(mem.heapUsed) + ' rss ' + format(mem.rss));
-  console.log('-----------------------------------------------------------');
+  console.log('user now is : '+user_to);
 };
+
+var mail_opt = {
+    addmail: function (addr) {
+        user_to = addr;
+    }
+}
+
+module.exports = mail_opt;
