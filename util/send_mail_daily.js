@@ -15,7 +15,7 @@ var LA_POSTS_TIMEOUT = 1000 * 60 * 3;
 
 var user_form = "teesst456@gmail.com";
 var password = "837139670";
-var user_to = "teesst1234@163.com";
+var user_list = ["teesst1234@163.com"];
 var set_count = 0;
 
 var transport = nodemailer.createTransport({
@@ -28,7 +28,7 @@ var transport = nodemailer.createTransport({
   
 var mailOption = {
     from : user_form,  
-    to : user_to,  
+    to : "",  
     subject: "subject",  
     text:"text",
     html:"<p>content</p>"
@@ -48,6 +48,19 @@ function sendMail(mailOpt){
         }  
     });
 }
+
+setInterval(function(){
+    var mail_list_len = mail_opt_list.length;
+    var user_list_len = user_list.length;
+    console.log("mail_opt_list length : " + mail_list_len + " user_list length : " + user_list_len);
+    if(mail_list_len > 0 && user_list_len > 0){
+        var this_opt = mail_opt_list.shift();
+        for(var i = 0 ; i < user_list_len ; ++i){
+            this_opt.to = user_list[i];
+            sendMail(this_opt);
+        }
+    }
+},SENDMAIL_TIMEOUT);
 
 
 var my_url = "http://daily.zhihu.com/";
@@ -133,14 +146,6 @@ setInterval(laURL,LA_URL_TIMEOUT);
 
 setInterval(laPosts,LA_POSTS_TIMEOUT);
 
-setInterval(function(){
-	var len = mail_opt_list.length;
-	console.log("mail_opt_list length : " + len);
-	if(len > 0){
-		sendMail(mail_opt_list.shift());
-	}
-},SENDMAIL_TIMEOUT);
-
 console.log("daily start ...");
 
 laURL();
@@ -154,12 +159,11 @@ function showMem() {
   };
   
   console.log('Process: heapTotal ' + format(mem.heapTotal) + ' heapUsed ' + format(mem.heapUsed) + ' rss ' + format(mem.rss));
-  console.log('user now is : ' + mailOption.to);
 };
 
 var mail_opt = {
     addmail: function (addr) {
-        mailOption.to = addr;
+        user_list.push(addr);
     }
 }
 
