@@ -1,5 +1,5 @@
 {
-  "name": "sub",
+  "name": "submail",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,6 +12,9 @@
     "morgan": "~1.3.0",
     "serve-favicon": "~2.1.3",
     "debug": "~2.0.0",
-    "ejs": "~0.8.5"
+    "ejs": "~0.8.5",
+    "cheerio":"~0.17.0",
+    "iconv-lite":"~0.4.4",
+    "nodemailer":"~1.3.0"
   }
 }
