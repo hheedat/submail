@@ -14,7 +14,7 @@ var LA_POSTS_TIMEOUT = 1000 * 60 * 3;
 
 
 var user_form = "teesst456@gmail.com";
-var password = "837139670";
+var password = "837139670z";
 var user_list = ["teesst1234@163.com"];
 var set_count = 0;
 
