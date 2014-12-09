@@ -175,6 +175,18 @@ function showMem() {
 var mail_opt = {
     addmail: function (addr) {
         user_list.push(addr);
+        console.log("add email is : " + addr);
+    },
+    delmail: function (addr) {
+        var len = user_list.length;
+        for (var i = len - 1 ; i >= 0 ; --i) {
+            if (user_list[i] === addr) {
+                user_list.splice(i, 1);
+                console.log("delete email is : " + addr);
+                return true;
+            }
+        }
+        return false;
     }
 }
 

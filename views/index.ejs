@@ -9,10 +9,17 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>input you email address that you want to receive our email</p>
     <div>
+        <p>input you email address which you want to receive our email</p>
         <form action="/addmail" method="post">
-            <input type="text" name="mail" value=" " />
+            <input type="text" name="mail" value="" />
+            <input type="submit" name="submit" value="submit" />
+        </form>
+    </div>
+    <div>
+        <p>delete you email address , and you will not receive our email</p>
+        <form action="/deletemail" method="post">
+            <input type="text" name="mail" value="" />
             <input type="submit" name="submit" value="submit" />
         </form>
     </div>
