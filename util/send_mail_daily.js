@@ -7,6 +7,7 @@ var iconv = require('iconv-lite');
 var SENDMAIL_TIMEOUT = 1000 * 60 * 5;
 var LA_URL_TIMEOUT = 1000 * 60 * 20;
 var LA_POSTS_TIMEOUT = 1000 * 60 * 3;
+var LARGE_MAIL_NUMBER = 5;
 
 // var SENDMAIL_TIMEOUT = 1000;
 // var LA_URL_TIMEOUT = 1000;
@@ -15,7 +16,7 @@ var LA_POSTS_TIMEOUT = 1000 * 60 * 3;
 
 var user_form = "teesst456@gmail.com";
 var password = "837139670z";
-var user_list = ["teesst1234@163.com"];
+var user_list = [];
 var set_count = 0;
 
 var transport = nodemailer.createTransport({
@@ -53,12 +54,14 @@ setInterval(function(){
     var mail_list_len = mail_opt_list.length;
     var user_list_len = user_list.length;
     console.log("mail_opt_list length : " + mail_list_len + " user_list length : " + user_list_len);
-    if(mail_list_len > 0 && user_list_len > 0){
+    if(mail_list_len > 0){
         var this_opt = mail_opt_list.shift();
-        for(var i = 0 ; i < user_list_len ; ++i){
-            this_opt.to = user_list[i];
-            sendMail(this_opt);
-        }
+        if (user_list_len > 0) {
+            for (var i = 0 ; i < user_list_len ; ++i) {
+                this_opt.to = user_list[i];
+                sendMail(this_opt);
+            }
+        }  
     }
 },SENDMAIL_TIMEOUT);
 
@@ -68,6 +71,7 @@ var my_url = "http://daily.zhihu.com/";
 var posts_url_list = [];
 
 var posts_url_list_already = [];
+var posts_title_list = [];
 
 function la(t_url,callback){
 
@@ -101,23 +105,30 @@ function laURL(){
         if(re){
             var $ = cheerio.load(re);
             var url_list = $(".link-button");
+            var title_list = $(".link-button .title");
             if(url_list.length>0){
-                for (var i = url_list.length - 1; i >= 0; i--) {
-                	var the_url = url_list[i].attribs.href;
+                for (var i = 0; i <= LARGE_MAIL_NUMBER; ++i) {
+                    var the_url = url_list[i].attribs.href;
+                    var the_title = title_list.eq(i).text();
                 	for (var j = posts_url_list_already.length - 1; j >= 0; j--) {
-                		if (posts_url_list_already[j] === the_url) {
+                		if (posts_url_list_already[j] === the_url || posts_title_list[j] === the_title) {
                 			the_url = null;
                 			break;
                 		};
                 	};
                 	if(the_url){
-                        posts_url_list_already.push(the_url);
+                	    posts_url_list_already.push(the_url);
+                	    posts_title_list.push(the_title);
                 		posts_url_list.push(the_url);
                 	}
                 };
             }
         }
     });
+    if (posts_url_list_already.length > 100) {
+        posts_url_list_already.shift();
+        posts_title_list.shift();
+    }
 }
 
 function laPosts(){
