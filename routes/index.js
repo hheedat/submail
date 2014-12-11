@@ -7,6 +7,11 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'submail' });
 });
 
+router.get('/allmail', function (req, res) {
+    var userlist = send_mail.allmail();
+    res.render('allmail', { title: 'submail',userlist:userlist });
+});
+
 router.post('/addmail', function (req, res) {
   send_mail.addmail(req.body.mail);
   res.render('success', { title: 'submail', message: 'add email success!' });
@@ -21,5 +26,7 @@ router.post('/deletemail', function (req, res) {
     }
     
 })
+
+
 
 module.exports = router;

@@ -187,6 +187,9 @@ var mail_opt = {
             }
         }
         return false;
+    },
+    allmail: function () {
+        return user_list;
     }
 }
 

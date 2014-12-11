@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+
+    </style>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>mails number : <%= userlist.length %></p>
+    <ul>
+        <% for(var i = 0 , len = userlist.length; i<len ; ++i){ %>
+          <li><%= userlist[i] %></li>
+        <% } %>
+    </ul>
+  </body>
+</html>
